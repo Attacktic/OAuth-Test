@@ -50,9 +50,10 @@ router.get('/auth/facebook/callback',
 passport.authenticate('facebook', { failureRedirect: '/'}), function (req, res) {
   var profile = req.session.passport.user;
   users.FBUserProfile(profile.id).then(function(result){
-    //console.log(result)
     //glitch alert: the same profile.id gets added to the database in some cases
     if (result.rows.length === 0){
+      users.findIdbyEmail(profile.emails[0].value).then(function(idresult){
+        if (idresult.rows.length === 0){
       users.createFBUser(profile.id).then(function(){
         users.findFBid(profile.id).then(function(id){
           users.createLocalUserFB(profile.displayName, profile.emails[0].value, id.rows[0].id).then(function(){
@@ -66,6 +67,24 @@ passport.authenticate('facebook', { failureRedirect: '/'}), function (req, res) 
           });
         });
       });
+    }
+    else {
+      users.createFBUser(profile.id).then(function(){
+        users.findFBid(profile.id).then(function(new_id){
+          //update db where email is same
+          users.connectFBAccount(profile.emails[0].value, new_id.rows[0].id).then(function(){
+            users.FBUserProfile(profile.id).then(function(theresult){
+              var trueid = theresult.rows[0].id;
+              var id = bcrypt.hashSync(String(trueid), salt);
+              res.cookie("user", id);
+              res.cookie("session", trueid);
+              res.redirect(`/${trueid}/profile`);
+            });
+          });
+        });
+      });
+    }
+  });
     }
     else {
       users.FBUserProfile(profile.id).then(function(theresult){

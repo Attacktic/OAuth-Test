@@ -33,5 +33,8 @@ module.exports = {
   },
   findIdbyEmail: function(email){
     return knex.raw(`select id from users where email='${email}'`);
+  },
+  connectFBAccount: function(email, facebook_key){
+    return knex.raw(`update users set facebook_id=${facebook_key} where email='${email}'`);
   }
 };
