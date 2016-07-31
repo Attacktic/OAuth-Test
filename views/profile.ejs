@@ -9,5 +9,15 @@
     <% if (logout === true){ %>
       <button type="button" name="button" onclick="location.href = '/logout';">Logout</button>
     <% } %>
+    <div class="container">
+      <div class="col-md-6 col-sm-offset-2">
+        <p>
+        <%= user.id %> - <%= user.name %>
+        </p>
+        <p>
+        <%= user.email %>
+        </p>
+      </div>
+    </div>
   </body>
 </html>

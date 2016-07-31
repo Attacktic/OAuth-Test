@@ -5,7 +5,7 @@ module.exports = {
     return knex.raw(`select * from users where id =${id}`);
   },
   FBUserProfile : function(facebook_key){
-    return knex.raw(`select * from users join fbusers on fbusers.id = users.facebook_id where fbusers.facebook_key='${facebook_key}'`);
+    return knex.raw(`select users.id as id, users.email as email, users.name as name from users join fbusers on fbusers.id = users.facebook_id where fbusers.facebook_key='${facebook_key}'`);
   },
   GoogleUserProfile : function(google_key){
     return knex.raw(`select * from users join googleusers on googleusers.id = users.google_id where googleusers.google_key=${google_key}`);
