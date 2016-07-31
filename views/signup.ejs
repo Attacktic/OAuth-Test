@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+  <body>
+    <div class="container">
+    <div class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <div class="panel-title">Sign Up</div>
+                        <div style="float:right; font-size: 85%; position: relative; top:-10px"><a id="signinlink" href="/signin">Sign In</a></div>
+                    </div>
+                    <% if (message.length != 0){ %>
+                      <div class="alert alert-danger col-sm-12"><%= message %></div>
+                    <% } %>
+                <div class="panel-body">
+                        <form class="form-horizontal" role="form" action="/signup" method="post">
+                            <div id="signupalert" style="display:none" class="alert alert-danger">
+                                <p>Error:</p>
+                                <span></span>
+                            </div>
+                        <div class="form-group">
+                                <label for="email" class="col-md-3 control-label">Email</label>
+                                <div class="col-md-9">
+                                    <input type="text" class="form-control" name="email" placeholder="Email">
+                                </div>
+                          </div>
+
+                            <div class="form-group">
+                                <label for="name" class="col-md-3 control-label">Name</label>
+                                <div class="col-md-9">
+                                    <input type="text" class="form-control" name="name" placeholder="Name">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="password" class="col-md-3 control-label">Password</label>
+                                <div class="col-md-9">
+                                    <input type="password" class="form-control" name="password" placeholder="Password">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-md-offset-3 col-md-9">
+                                    <input type="submit" class="btn btn-info" value="Sign Up"><i class="icon-hand-right"></i></input>
+                                </div>
+                            </div>
+                            </form>
+                            <div class="form-group">
+
+                                <div class="col-md-offset-3 col-md-9">
+                                    <button type="button" class="btn btn-primary" onclick="location.href = '/auth/facebook'"><i class="icon-facebook"></i>Sign Up with Facebook</button>
+                                </div>
+
+                            </div>
+                     </div>
+                </div>
+
+     </div>
+</div>
+  </body>
+</html>
