@@ -97,9 +97,9 @@ router.post('/signin', function(req, res, next) {
   else {
     var thispassword = req.body.password;
     users.findIdbyEmail(req.body.email).then(function(result){
-      if (result.rows[0]){
+      if (result.rows.length !== 0){
         users.localUserProfile(result.rows[0].id).then(function(user_data){
-          console.log("fist ", thispassword, "second ", user_data.rows[0].password)
+        if (user_data.rows[0].password !== null){
           if (bcrypt.compareSync(thispassword, user_data.rows[0].password)){
             var trueid = result.rows[0].id;
             var id = bcrypt.hashSync(String(trueid), salt);
@@ -108,6 +108,8 @@ router.post('/signin', function(req, res, next) {
             res.redirect(`/${trueid}/profile`);
           }
           else { res.render('signin', {title: 'Login Test', message: 'invalid email/password combination'}); }
+        }
+        else { res.render('signin', {title: 'Login Test', message: 'please login with Facebook'});  } //in case user tries to login with same email as facebook account
         });
       }
       else { res.render('signin', {title: 'Login Test', message: 'invalid email/password combination'}); }
